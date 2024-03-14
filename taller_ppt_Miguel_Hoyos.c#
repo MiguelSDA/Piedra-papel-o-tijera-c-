@@ -1,0 +1,87 @@
+using System;
+namespace taller_ppt_Miguel_Hoyos
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("¡Bienvenido al juego de Piedra, Papel o Tijeras!");
+            int puntajeJ = 0;
+            int puntajeC = 0;
+            int rondasJugadas = 0;
+            while (true)
+            {
+                Console.WriteLine("Selecciona tu jugada: ");
+                Console.WriteLine("Piedra");
+                Console.WriteLine("Papel");
+                Console.WriteLine("Tijera");
+                string jugadaJugador = Console.ReadLine().ToLower();
+
+                string[] opcionesComputadora = { "piedra", "papel", "tijera" };
+                Random random = new Random();
+                int indiceComputadora = random.Next(opcionesComputadora.Length);
+                string jugadaComputadora = opcionesComputadora[indiceComputadora];
+
+                if (jugadaJugador == "piedra" || jugadaJugador == "papel" || jugadaJugador == "tijera")
+                {
+                    Console.WriteLine($"Su jugada fue: {jugadaJugador}");
+                    Console.WriteLine($"La computadora jugó: {jugadaComputadora}");
+
+                    if ((jugadaJugador == "piedra" && jugadaComputadora == "tijera") ||
+                        (jugadaJugador == "papel" && jugadaComputadora == "piedra") ||
+                        (jugadaJugador == "tijera" && jugadaComputadora == "papel"))
+                    {
+                        Console.WriteLine("El jugador gana la ronda");
+                        puntajeJ++;
+                    }
+                    else if ((jugadaJugador == "piedra" && jugadaComputadora == "papel") ||
+                             (jugadaJugador == "papel" && jugadaComputadora == "tijera") ||
+                             (jugadaJugador == "tijera" && jugadaComputadora == "piedra"))
+                    {
+                        Console.WriteLine("La computadora gana la ronda");
+                        puntajeC++;
+                    }
+                    else
+                    {
+                        Console.WriteLine("La ronda termina en empate");
+                    }
+
+                    rondasJugadas++;
+
+                    // Actualizar el puntaje
+                    Console.WriteLine($"Puntaje del jugador: {puntajeJ}");
+                    Console.WriteLine($"Puntaje de la computadora: {puntajeC}");
+
+                    // Preguntar si el jugador quiere seguir jugando después de cada 5 rondas
+                    if (rondasJugadas % 5 == 0)
+                    {
+                        Console.WriteLine("¿Quieres seguir jugando? (s/n)");
+                        string continuar = Console.ReadLine();
+                        if (continuar.ToLower() != "s")
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Respuesta no válida, por favor selecciona una opción válida.");
+                }
+            }
+
+            // Mostrar el resultado final del juego
+            if (puntajeJ > puntajeC)
+            {
+                Console.WriteLine("¡El jugador gana el juego!");
+            }
+            else if (puntajeC > puntajeJ)
+            {
+                Console.WriteLine("¡La computadora gana el juego!");
+            }
+            else
+            {
+                Console.WriteLine("¡El juego termina en empate!");
+            }
+
+            Console.WriteLine("¡Gracias por jugar!");
+        }
+    }
+}
